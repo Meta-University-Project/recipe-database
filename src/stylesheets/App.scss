@@ -1,5 +1,21 @@
+@use "constants";
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: constants.$important-background-color;
+}
+
 .App {
   text-align: center;
+  font-family: constants.$font-family;
+  font-size: constants.$medium-font-size;
+  font-weight: constants.$medium-font-weight;
+  background-color: constants.$background-color;
+  min-height: 100vh;
 }
 
 .App-logo {
