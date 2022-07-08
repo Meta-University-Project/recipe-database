@@ -1,0 +1,18 @@
+@use "constants";
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 50px 30px;
+  background-color: constants.$important-background-color;
+
+  .logo {
+    height: 65px;
+  }
+
+  .profile-icon {
+    background-color: transparent;
+    border: none;
+  }
+}

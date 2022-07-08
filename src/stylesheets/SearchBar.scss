@@ -1,0 +1,28 @@
+@use "constants";
+
+.search-bar {
+  width: 100%;
+  padding: 0 20px;
+  position: relative;
+
+  .search-icon {
+    position: absolute;
+    left: 45px;
+  }
+
+  input {
+    width: 100%;
+    font-family: constants.$font-family;
+    font-size: constants.$medium-font-size;
+    font-weight: constants.$medium-font-weight;
+    padding: 20px 15px 20px 60px;
+    border: solid 2px constants.$font-color;
+    border-radius: 50px;
+    box-shadow: 0 3px 1px 1px constants.$shadow-color inset;
+
+    &:focus {
+      outline: 2px solid constants.$accent-color;
+      outline-offset: 2px;
+    }
+  }
+}
