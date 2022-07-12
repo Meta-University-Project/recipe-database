@@ -1,0 +1,27 @@
+@use "constants";
+
+.recipe-card {
+  width: 400px;
+  background-color: constants.$important-background-color;
+  padding: 25px;
+  border-radius: constants.$border-radius;
+  margin: 10px;
+  text-align: left;
+  cursor: pointer;
+  transition: constants.$transition;
+
+  &:hover {
+    background-color: constants.$accent-color;
+  }
+
+  img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border: constants.$border-style;
+  }
+
+  p {
+    margin-bottom: 0;
+  }
+}
