@@ -1,9 +1,14 @@
 $font-family: "Quicksand", Helvetica, sans-serif;
 $medium-font-size: 16px;
 $medium-font-weight: 500;
+$border-radius: 10px;
 
 $font-color: #000;
-$accent-color: #228be6;
+$accent-outline-color: #228be6;
+$accent-color: #ffce2b;
 $shadow-color: #e0e0e0;
 $background-color: #f0f0f0;
 $important-background-color: #fff;
+
+$border-style: solid 2px $font-color;
+$transition: all 0.2s ease;

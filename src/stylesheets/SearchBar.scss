@@ -16,12 +16,12 @@
     font-size: constants.$medium-font-size;
     font-weight: constants.$medium-font-weight;
     padding: 20px 15px 20px 60px;
-    border: solid 2px constants.$font-color;
+    border: constants.$border-style;
     border-radius: 50px;
     box-shadow: 0 3px 1px 1px constants.$shadow-color inset;
 
     &:focus {
-      outline: 2px solid constants.$accent-color;
+      outline: 2px solid constants.$accent-outline-color;
       outline-offset: 2px;
     }
   }
