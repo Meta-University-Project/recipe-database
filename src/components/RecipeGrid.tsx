@@ -8,7 +8,7 @@ type RecipeGridProps = {
 
 const RecipeGrid: React.FC<RecipeGridProps> = ({ recipes }) => (
   <div className={"recipe-grid"}>
-    {recipes.map((recipe) => <RecipeCard {...recipe} />)}
+    {recipes.map((recipe) => <RecipeCard id={recipe.key} {...recipe} />)}
   </div>
 );
 
