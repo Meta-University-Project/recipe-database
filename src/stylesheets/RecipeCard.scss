@@ -1,5 +1,10 @@
 @use "constants";
 
+.recipe-card-link-wrapper {
+  text-decoration: none;
+  color: inherit;
+}
+
 .recipe-card {
   width: 400px;
   background-color: constants.$important-background-color;
@@ -8,7 +13,7 @@
   margin: 10px;
   text-align: left;
   cursor: pointer;
-  transition: constants.$transition;
+  transition: background-color constants.$transition;
 
   &:hover {
     background-color: constants.$accent-color;

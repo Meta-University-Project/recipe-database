@@ -1,14 +1,22 @@
-$font-family: "Quicksand", Helvetica, sans-serif;
+$font-family: "Nunito", Helvetica, sans-serif;
+$huge-font-size: 5em;
+$large-font-size: 2em;
 $medium-font-size: 16px;
 $medium-font-weight: 500;
+$bold-font-weight: 700;
+$extra-bold-font-weight: 900;
 $border-radius: 10px;
 
 $font-color: #000;
 $accent-outline-color: #228be6;
 $accent-color: #ffce2b;
+$card-purple-color: #e599f7;
+$card-purple-shadow-color: #9c36b5;
+$card-green-color: #63e6be;
+$card-green-shadow-color: #0ca678;
 $shadow-color: #e0e0e0;
 $background-color: #f0f0f0;
 $important-background-color: #fff;
 
 $border-style: solid 2px $font-color;
-$transition: all 0.2s ease;
+$transition: 0.2s ease;
