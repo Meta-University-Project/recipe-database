@@ -33,9 +33,10 @@ button, input[type=submit], input[type=button] {
   }
 }
 
-input, button {
+input, button, textarea, div[contenteditable="true"] {
   font-family: constants.$font-family;
   font-weight: constants.$bold-font-weight;
+  font-size: constants.$medium-font-size;
 
   &:focus {
     outline: 2px solid constants.$accent-outline-color;

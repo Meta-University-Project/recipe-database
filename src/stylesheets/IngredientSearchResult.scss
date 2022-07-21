@@ -1,0 +1,13 @@
+@use "constants";
+
+.ingredient-search-result {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  width: 100%;
+  font-weight: constants.$medium-font-weight;
+
+  &:focus {
+    outline-offset: -2px;
+  }
+}

@@ -1,24 +1,33 @@
 @use "constants";
 
-.search-bar {
+.search {
   width: 100%;
-  padding: 0 20px;
   position: relative;
 
-  .search-icon {
-    position: absolute;
-    left: 45px;
+  .search-bar {
+    width: 100%;
+    padding: 0 20px;
+    position: relative;
+
+    .search-input {
+      width: 100%;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 45px;
+    }
   }
 
-  input {
-    width: 100%;
-    padding: 20px 15px 20px 60px;
-    border: constants.$border-style;
-    border-radius: 50px;
-    box-shadow: 0 3px 1px 1px constants.$shadow-color inset;
-
-    &:focus {
-      box-shadow: none;
-    }
+  .search-helper {
+    position: absolute;
+    background-color: constants.$important-background-color;
+    width: 300px;
+    padding: 0 0 constants.$border-radius 0;
+    border-radius: 0 0 constants.$border-radius constants.$border-radius;
+    top: 100%;
+    left: 75px;
+    box-shadow: 0 0 5px 2px #00000033;
+    clip-path: inset(0 -5px -5px -5px);
   }
 }

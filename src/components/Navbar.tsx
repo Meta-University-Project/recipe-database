@@ -6,13 +6,17 @@ import logo from "../images/logo-placeholder.png";
 import "../stylesheets/Navbar.scss";
 
 type NavbarProps = {
-
+  searchValue: string,
+  setSearchValue: (newVal: string) => void,
+  queriedIngredients: Ingredient[],
+  setQueriedIngredients: (newVal: Ingredient[]) => void,
+  ingredientOptions: IngredientOption[]
 };
 
-const Navbar: React.FC<NavbarProps> = () => (
+const Navbar: React.FC<NavbarProps> = (props) => (
   <nav>
     <img src={logo} className={"logo"} alt={"logo"} />
-    <SearchBar />
+    <SearchBar {...props} />
     <button className={"profile-icon"}>
       <FontAwesomeIcon icon={regular("circle-user")} fontSize={65} />
     </button>

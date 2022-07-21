@@ -6,10 +6,10 @@ const SAMPLE_RECIPE: Recipe = {
   img: "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=768,574",
   description: SAMPLE_DESCRIPTION,
   ingredients: [
-    { name: "something", quantity: 1, unit: "tbsp" },
-    { name: "something else", quantity: 2, unit: "cup" },
-    { name: "onion, diced", quantity: 3, unit: "whole" },
-    { name: "onion, diced", quantity: 3/8, unit: "tsp" }
+    { id: "1", quantity: 1, unit: "tbsp", form: "shredded" },
+    { id: "2", quantity: 2, unit: "cup", form: "default" },
+    { id: "3", quantity: 3, unit: "piece", form: "whole" },
+    { id: "4", quantity: 3/8, unit: "tsp", form: "diced" }
   ],
   instructions: [
     "Preheat oven to 350\u00B0F",
