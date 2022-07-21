@@ -12,22 +12,5 @@
     .search-input {
       width: 100%;
     }
-
-    .search-icon {
-      position: absolute;
-      left: 45px;
-    }
-  }
-
-  .search-helper {
-    position: absolute;
-    background-color: constants.$important-background-color;
-    width: 300px;
-    padding: 0 0 constants.$border-radius 0;
-    border-radius: 0 0 constants.$border-radius constants.$border-radius;
-    top: 100%;
-    left: 75px;
-    box-shadow: 0 0 5px 2px #00000033;
-    clip-path: inset(0 -5px -5px -5px);
   }
 }

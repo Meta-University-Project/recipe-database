@@ -1,4 +1,6 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { getIngredientDetails } from "../constants/utils";
 import "../stylesheets/SelectedIngredient.scss";
 
@@ -13,7 +15,11 @@ const SelectedIngredient: React.FC<SelectedIngredientProps> = ({ ingredient, ing
 
   return ingredientDetails ? (
     <button ref={buttonRef} className={"selected-ingredient"} type={"button"}>
-      {ingredientDetails.name} ({ingredient.quantity} {ingredient.unit})
+      {ingredientDetails.name} (
+      {ingredient.quantity === "infinite"
+        ? <FontAwesomeIcon icon={solid("infinity")} />
+        : `${ingredient.quantity} ${ingredient.unit}`}
+      )
     </button>
   ) : null;
 };

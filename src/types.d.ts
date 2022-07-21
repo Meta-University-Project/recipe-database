@@ -9,9 +9,12 @@ type Recipe = {
 
 type Ingredient = {
   id: string,
-  quantity: number,
-  form: FoodForm,
-  unit: Unit
+  // "infinite" used only in searches, "to taste" excludes ingredient from search but will appear in recipe
+  quantity: number | "infinite" | "to taste",
+  // "any" form used in searches
+  form: FoodForm | "any",
+  // "any" unit used when quantity === "infinite"
+  unit: Unit | "any",
 };
 
 type IngredientOption = {

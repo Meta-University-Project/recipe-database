@@ -7,9 +7,9 @@ import "../stylesheets/Navbar.scss";
 
 type NavbarProps = {
   searchValue: string,
-  setSearchValue: (newVal: string) => void,
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>,
   queriedIngredients: Ingredient[],
-  setQueriedIngredients: (newVal: Ingredient[]) => void,
+  setQueriedIngredients: React.Dispatch<React.SetStateAction<Ingredient[]>>,
   ingredientOptions: IngredientOption[]
 };
 

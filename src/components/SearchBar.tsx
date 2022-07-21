@@ -1,48 +1,74 @@
 import React from "react";
-import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { getHeight } from "../constants/utils";
-import IngredientSearchResult from "./IngredientSearchResult";
+import { getBounds } from "../constants/utils";
 import TextInputWithIngredients from "./TextInputWithIngredients";
+import SearchHelper from "./SearchHelper";
 import "../stylesheets/SearchBar.scss";
 
 type SearchBarProps = {
   searchValue: string,
-  setSearchValue: (newVal: string) => void,
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>,
   queriedIngredients: Ingredient[],
-  setQueriedIngredients: (newVal: Ingredient[]) => void,
+  setQueriedIngredients: React.Dispatch<React.SetStateAction<Ingredient[]>>,
   ingredientOptions: IngredientOption[]
 };
 
 const SearchBar: React.FC<SearchBarProps> = ({ searchValue, setSearchValue, queriedIngredients, setQueriedIngredients, ingredientOptions }) => {
-  const [iconTransform, setIconTransform] = React.useState(0);
   const [helperTransform, setHelperTransform] = React.useState(0);
+  const [filteredIngredientOptions, setFilteredIngredientOptions] = React.useState<IngredientOption[]>([]);
+  const [focusedResult, setFocusedResult] = React.useState(0);
 
   const containerRef = React.useRef<HTMLFormElement>(null);
-  const iconRef = React.useRef<HTMLDivElement>(null);
   const textDivRef = React.useRef<HTMLDivElement>(null);
 
-  // Transform search icon to be vertically positioned in center of div
-  React.useEffect(() => {
-    if (!containerRef.current || !iconRef.current)
-      return;
-    setIconTransform((getHeight(containerRef) - getHeight(iconRef)) / 2);
-  }, [containerRef, iconRef]);
+  const addIngredient = (id: string) => {
+    setQueriedIngredients((ingredients) => ([
+      ...ingredients,
+      { id, quantity: "infinite", form: "any", unit: "any" }
+    ]));
+    setSearchValue("");
+  };
+
+  const addFocusedIngredient = () => {
+    if (focusedResult >= 0 && focusedResult < filteredIngredientOptions.length) {
+      addIngredient(filteredIngredientOptions[focusedResult].id);
+    }
+  };
+
+  const incrementFocusedIngredient = () => {
+    setFocusedResult((focused) => (
+      focused < filteredIngredientOptions.length - 1
+        ? focused + 1
+        : focused
+    ));
+  }
+
+  const decrementFocusedIngredient = () => {
+    setFocusedResult((focused) => (
+      focused > 0
+        ? focused - 1
+        : focused
+    ));
+  }
 
   // Transform search helper to be horizontally aligned with typed text
   React.useEffect(() => {
-    if (!iconRef.current || !textDivRef.current)
-      return;
-    const iconBounds = iconRef.current.getBoundingClientRect();
-    setHelperTransform(textDivRef.current.getBoundingClientRect().x - iconBounds.x - iconBounds.width + 65);
-  }, [iconRef, textDivRef, queriedIngredients]);
+    setHelperTransform(getBounds(textDivRef).x - getBounds(containerRef).x - 10);
+  }, [containerRef, textDivRef, queriedIngredients]);
+
+  // Filter available ingredients based on what user is searching
+  React.useEffect(() => {
+    setFilteredIngredientOptions(
+      searchValue.length > 0
+        ? ingredientOptions.filter(({ id, name }) => (
+          name.toLowerCase().includes(searchValue.toLowerCase())
+          && !queriedIngredients.find((queriedIngredient) => queriedIngredient.id === id)
+        )) : []
+    );
+  }, [queriedIngredients, ingredientOptions, searchValue]);
 
   return (
     <div className={"search"}>
-      <form className={"search-bar"} ref={containerRef}>
-        <div className={"search-icon"} ref={iconRef} style={{ top: iconTransform }}>
-          <FontAwesomeIcon icon={solid("magnifying-glass")} fontSize={25} />
-        </div>
+      <form className={"search-bar"} ref={containerRef} onSubmit={() => console.log("hi")}>
         <TextInputWithIngredients
           onTextChange={setSearchValue}
           onIngredientsChange={setQueriedIngredients}
@@ -52,13 +78,19 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchValue, setSearchValue, quer
           innerRef={textDivRef}
           className={"search-input"}
           placeholder={"find recipes"}
+          incrementFocusedResult={incrementFocusedIngredient}
+          decrementFocusedResult={decrementFocusedIngredient}
+          onSubmit={addFocusedIngredient}
         />
       </form>
-      <div className={"search-helper"} style={{ left: helperTransform }}>
-        {ingredientOptions.map((ingredientOption) => (
-          <IngredientSearchResult key={ingredientOption.id} {...ingredientOption} />
-        ))}
-      </div>
+      <SearchHelper
+        focusedResult={focusedResult}
+        setFocusedResult={setFocusedResult}
+        searchValue={searchValue}
+        addIngredient={addIngredient}
+        ingredientOptions={filteredIngredientOptions}
+        transform={helperTransform}
+      />
     </div>
   )
 };

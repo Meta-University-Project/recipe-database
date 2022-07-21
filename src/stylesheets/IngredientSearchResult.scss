@@ -1,13 +1,25 @@
 @use "constants";
 
 .ingredient-search-result {
-  display: flex;
-  flex-direction: column;
   padding: 20px;
   width: 100%;
   font-weight: constants.$medium-font-weight;
+  text-align: left;
 
   &:focus {
     outline-offset: -2px;
+  }
+
+  &.focused {
+    background-color: constants.$accent-color;
+  }
+
+  &:hover:not(.focused) {
+    background-color: unset;
+  }
+
+  .query {
+    font-weight: constants.$extra-bold-font-weight;
+    background-color: constants.$accent-color;
   }
 }
