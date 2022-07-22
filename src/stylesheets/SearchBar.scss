@@ -4,6 +4,14 @@
   width: 100%;
   position: relative;
 
+  &.focused {
+    .search-input {
+      box-shadow: none;
+      outline: 2px solid constants.$accent-outline-color;
+      outline-offset: 2px;
+    }
+  }
+
   .search-bar {
     width: 100%;
     padding: 0 20px;

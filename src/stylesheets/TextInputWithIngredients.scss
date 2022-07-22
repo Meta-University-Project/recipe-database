@@ -12,12 +12,6 @@
   cursor: text;
   position: relative;
 
-  &:focus-within {
-    box-shadow: none;
-    outline: 2px solid constants.$accent-outline-color;
-    outline-offset: 2px;
-  }
-
   .search-icon {
     margin-right: 10px;
   }

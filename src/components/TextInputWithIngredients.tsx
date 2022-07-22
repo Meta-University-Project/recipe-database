@@ -15,13 +15,14 @@ type TextInputProps = React.HTMLAttributes<HTMLDivElement> & {
   innerRef: React.RefObject<HTMLDivElement>,
   incrementFocusedResult: () => void,
   decrementFocusedResult: () => void,
-  onSubmit: () => void
+  onSubmit: () => void,
+  setSearchFocused: React.Dispatch<React.SetStateAction<boolean>>
 };
 
 const TextInputWithIngredients: React.FC<TextInputProps> = ({ value, ingredients, placeholder,
                                                               onTextChange, onIngredientsChange, ingredientOptions,
                                                               innerRef, className, incrementFocusedResult,
-                                                              decrementFocusedResult, onSubmit, ...props }) => {
+                                                              decrementFocusedResult, onSubmit, setSearchFocused, ...props }) => {
   const [placeholderOffset, setPlaceholderOffset] = React.useState(0);
 
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -77,6 +78,13 @@ const TextInputWithIngredients: React.FC<TextInputProps> = ({ value, ingredients
     selection.addRange(range);
   }
 
+  const onLeaveFocus: React.FocusEventHandler = (e) => {
+    // don't unfocus if clicking on an ingredient search result
+    if (!e.relatedTarget || !e.relatedTarget.classList.contains("ingredient-search-result")) {
+      setSearchFocused(false);
+    }
+  }
+
   React.useEffect(() => {
     setCaret(innerRef.current, caretPos.current);
     innerRef.current?.focus();
@@ -110,6 +118,8 @@ const TextInputWithIngredients: React.FC<TextInputProps> = ({ value, ingredients
         className={"text-div"}
         ref={innerRef}
         onKeyDown={onKeyPress}
+        onFocus={() => setSearchFocused(true)}
+        onBlur={onLeaveFocus}
       >
         {value}
       </div>

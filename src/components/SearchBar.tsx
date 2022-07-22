@@ -16,6 +16,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchValue, setSearchValue, quer
   const [helperTransform, setHelperTransform] = React.useState(0);
   const [filteredIngredientOptions, setFilteredIngredientOptions] = React.useState<IngredientOption[]>([]);
   const [focusedResult, setFocusedResult] = React.useState(0);
+  const [searchFocused, setSearchFocused] = React.useState(false);
 
   const containerRef = React.useRef<HTMLFormElement>(null);
   const textDivRef = React.useRef<HTMLDivElement>(null);
@@ -67,7 +68,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchValue, setSearchValue, quer
   }, [queriedIngredients, ingredientOptions, searchValue]);
 
   return (
-    <div className={"search"}>
+    <div className={`search ${searchFocused ? "focused" : ""}`}>
       <form className={"search-bar"} ref={containerRef} onSubmit={() => console.log("hi")}>
         <TextInputWithIngredients
           onTextChange={setSearchValue}
@@ -81,9 +82,11 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchValue, setSearchValue, quer
           incrementFocusedResult={incrementFocusedIngredient}
           decrementFocusedResult={decrementFocusedIngredient}
           onSubmit={addFocusedIngredient}
+          setSearchFocused={setSearchFocused}
         />
       </form>
       <SearchHelper
+        searchFocused={searchFocused}
         focusedResult={focusedResult}
         setFocusedResult={setFocusedResult}
         searchValue={searchValue}
