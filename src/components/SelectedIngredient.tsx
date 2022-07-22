@@ -14,7 +14,7 @@ const SelectedIngredient: React.FC<SelectedIngredientProps> = ({ ingredient, ing
   const ingredientDetails = getIngredientDetails(ingredient.id, ingredientOptions);
 
   return ingredientDetails ? (
-    <button ref={buttonRef} className={"selected-ingredient"} type={"button"}>
+    <button ref={buttonRef} className={"selected-ingredient"} type={"button"} onClick={(e) => e.stopPropagation()}>
       {ingredientDetails.name} (
       {ingredient.quantity === "infinite"
         ? <FontAwesomeIcon icon={solid("infinity")} />
