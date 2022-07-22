@@ -25,7 +25,6 @@ const SearchHelper: React.FC<SearchHelperProps> = ({ searchValue, addIngredient,
         <IngredientSearchResult
           key={id}
           searchValue={searchValue}
-          id={id}
           name={name}
           onClick={() => addIngredient(id)}
           focused={focusedResult === index}

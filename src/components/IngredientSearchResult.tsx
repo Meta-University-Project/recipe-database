@@ -2,7 +2,6 @@ import React from "react";
 import "../stylesheets/IngredientSearchResult.scss";
 
 type IngredientSearchResultProps = {
-  id: string,
   name: string,
   searchValue: string,
   onClick: () => void,
@@ -10,7 +9,7 @@ type IngredientSearchResultProps = {
   focusResult: () => void
 };
 
-const IngredientSearchResult: React.FC<IngredientSearchResultProps> = ({ searchValue, onClick, id, name, focused, focusResult }) => {
+const IngredientSearchResult: React.FC<IngredientSearchResultProps> = ({ searchValue, onClick, name, focused, focusResult }) => {
   const queryIndex = name.toLowerCase().indexOf(searchValue.toLowerCase());
 
   // Technically unreachable, but check that substring exists within name

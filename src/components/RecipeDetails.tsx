@@ -14,7 +14,7 @@ type RecipeDetailsProps = {
 const RecipeDetails: React.FC<RecipeDetailsProps> = ({ recipes, ingredientOptions }) => {
   const navigate = useNavigate();
   const { recipeId } = useParams();
-  const recipe = recipes.find(({ key }) => recipeId === key);
+  const recipe = recipes.find(({ id }) => recipeId === id);
 
   if (!recipe) {
     // TODO: Handle invalid/undefined recipe ID (404 page)

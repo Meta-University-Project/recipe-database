@@ -1,10 +1,14 @@
 type Recipe = {
   img: string,
   title: string,
-  key: string,
+  id: string,
   description: string,
   ingredients: Ingredient[],
   instructions: string[]
+};
+
+type SearchedRecipe = Recipe & {
+  match: number
 };
 
 type Ingredient = {

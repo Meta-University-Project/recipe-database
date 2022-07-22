@@ -11,6 +11,19 @@ const App = () => {
   const [searchValue, setSearchValue] = React.useState("");
   const [queriedIngredients, setQueriedIngredients] = React.useState<Ingredient[]>([]);
 
+  const recipeMatches: SearchedRecipe[] = Recipes.map(({ ingredients, ...recipe }) => {
+    let totalMatching = 0;
+    for (const { id } of ingredients) {
+      if (queriedIngredients.find((queriedIngredient) => id === queriedIngredient.id))
+        totalMatching++;
+    }
+    return {
+      ...recipe,
+      ingredients,
+      match: totalMatching / ingredients.length // match percentage
+    };
+  }).filter(({ match }) => match > 0);
+
   return (
     <div className={"App"}>
       <Navbar
@@ -21,7 +34,7 @@ const App = () => {
         ingredientOptions={IngredientOptions}
       />
       <Routes>
-        <Route path={"/"} element={<RecipeGrid recipes={Recipes} />} />
+        <Route path={"/"} element={<RecipeGrid recipes={recipeMatches} />} />
         <Route path={"recipes"}>
           <Route path={":recipeId"} element={<RecipeDetails recipes={Recipes} ingredientOptions={IngredientOptions} />} />
         </Route>

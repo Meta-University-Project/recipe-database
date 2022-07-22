@@ -3,12 +3,12 @@ import RecipeCard from "./RecipeCard";
 import "../stylesheets/RecipeGrid.scss";
 
 type RecipeGridProps = {
-  recipes: Recipe[]
+  recipes: SearchedRecipe[]
 };
 
 const RecipeGrid: React.FC<RecipeGridProps> = ({ recipes }) => (
   <div className={"recipe-grid"}>
-    {recipes.map((recipe) => <RecipeCard id={recipe.key} {...recipe} />)}
+    {recipes.map((recipe) => <RecipeCard key={recipe.id} {...recipe} />)}
   </div>
 );
 
