@@ -6,8 +6,8 @@ import SelectedIngredient from "./SelectedIngredient";
 import "../stylesheets/TextInputWithIngredients.scss";
 
 type TextInputProps = React.HTMLAttributes<HTMLDivElement> & {
-  onTextChange: (value: string) => void,
-  onIngredientsChange: (value: Ingredient[]) => void,
+  onTextChange: React.Dispatch<React.SetStateAction<string>>,
+  onIngredientsChange: React.Dispatch<React.SetStateAction<Ingredient[]>>,
   placeholder: string,
   value: string,
   ingredients: Ingredient[],
@@ -85,6 +85,10 @@ const TextInputWithIngredients: React.FC<TextInputProps> = ({ value, ingredients
     }
   }
 
+  const deleteSelectedIngredient = (id: string) => {
+    onIngredientsChange(ingredients.filter((ingredient) => ingredient.id !== id));
+  }
+
   React.useEffect(() => {
     setCaret(innerRef.current, caretPos.current);
     innerRef.current?.focus();
@@ -110,7 +114,12 @@ const TextInputWithIngredients: React.FC<TextInputProps> = ({ value, ingredients
         {placeholder}
       </p>
       {ingredients.map((ingredient) => (
-        <SelectedIngredient key={ingredient.id} ingredient={ingredient} ingredientOptions={ingredientOptions} />
+        <SelectedIngredient
+          key={ingredient.id}
+          ingredient={ingredient}
+          ingredientOptions={ingredientOptions}
+          onDelete={() => deleteSelectedIngredient(ingredient.id)}
+        />
       ))}
       <div
         contentEditable
