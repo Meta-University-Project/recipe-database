@@ -1,0 +1,48 @@
+@use "constants";
+
+.text-input-with-ingredients {
+  padding: 10px 15px 10px 20px;
+  border: constants.$border-style;
+  border-radius: 50px;
+  box-shadow: 0 3px 1px 1px constants.$shadow-color inset;
+  resize: none;
+  display: flex;
+  align-items: center;
+  min-height: 66px;
+  cursor: text;
+  position: relative;
+
+  &:focus-within {
+    box-shadow: none;
+    outline: 2px solid constants.$accent-outline-color;
+    outline-offset: 2px;
+  }
+
+  .search-icon {
+    margin-right: 10px;
+  }
+
+  .placeholder {
+    font-weight: constants.$bold-font-weight;
+    color: constants.$placeholder-color;
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+
+    &.hidden {
+      visibility: hidden;
+    }
+  }
+
+  .text-div {
+    margin: 10px 5px;
+    min-width: 10px;
+    min-height: 22px;
+    outline: none;
+    z-index: 1;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}

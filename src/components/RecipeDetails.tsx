@@ -4,15 +4,17 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Card from "./Card";
 import "../stylesheets/RecipeDetails.scss";
+import { getIngredientDetails } from "../constants/utils";
 
 type RecipeDetailsProps = {
-  recipes: Recipe[]
+  recipes: Recipe[],
+  ingredientOptions: IngredientOption[]
 };
 
-const RecipeDetails: React.FC<RecipeDetailsProps> = ({ recipes }) => {
+const RecipeDetails: React.FC<RecipeDetailsProps> = ({ recipes, ingredientOptions }) => {
   const navigate = useNavigate();
   const { recipeId } = useParams();
-  const recipe = recipes.find(({ key }) => recipeId === key);
+  const recipe = recipes.find(({ id }) => recipeId === id);
 
   if (!recipe) {
     // TODO: Handle invalid/undefined recipe ID (404 page)
@@ -35,9 +37,14 @@ const RecipeDetails: React.FC<RecipeDetailsProps> = ({ recipes }) => {
       <div className={"recipe-contents"}>
         <Card header={"Ingredients"} className={"ingredients"} headerColor={"purple"}>
           <ul>
-            {recipe.ingredients.map(({ name, quantity, unit }, index) => (
-              <li key={index}>{quantity} {unit} {name}</li>
-            ))}
+            {recipe.ingredients.map(({ id, quantity, unit }, index) => {
+              const ingredientDetails = getIngredientDetails(id, ingredientOptions);
+              return (
+                ingredientDetails
+                  ? <li key={id}>{quantity} {unit} {ingredientDetails.name}</li>
+                  : null
+              );
+            })}
           </ul>
         </Card>
         <Card header={"Preparation"} className={"instructions"} headerColor={"green"}>

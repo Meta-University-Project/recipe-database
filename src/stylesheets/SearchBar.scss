@@ -1,24 +1,16 @@
 @use "constants";
 
-.search-bar {
+.search {
   width: 100%;
-  padding: 0 20px;
   position: relative;
 
-  .search-icon {
-    position: absolute;
-    left: 45px;
-  }
-
-  input {
+  .search-bar {
     width: 100%;
-    padding: 20px 15px 20px 60px;
-    border: constants.$border-style;
-    border-radius: 50px;
-    box-shadow: 0 3px 1px 1px constants.$shadow-color inset;
+    padding: 0 20px;
+    position: relative;
 
-    &:focus {
-      box-shadow: none;
+    .search-input {
+      width: 100%;
     }
   }
 }
