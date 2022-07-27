@@ -25,6 +25,15 @@ const SelectedIngredient: React.FC<SelectedIngredientProps> = ({ ingredient, ing
     }
   };
 
+  const onButtonBlur: React.FocusEventHandler = (e) => {
+    if (!e.relatedTarget || (
+      !e.relatedTarget.classList.contains("unit-select") &&
+      !e.relatedTarget.classList.contains("quantity-input")
+    )) {
+      setIsFocused(false);
+    }
+  }
+
   React.useEffect(() => {
     setQuantityPickerOffset((getBounds(buttonRef).width - getBounds(quantityPickerRef).width) / 2);
   }, [buttonRef, quantityPickerRef]);
@@ -38,7 +47,7 @@ const SelectedIngredient: React.FC<SelectedIngredientProps> = ({ ingredient, ing
         onClick={(e) => e.stopPropagation()}
         onKeyDown={onKeyPress}
         onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
+        onBlur={onButtonBlur}
       >
         {ingredientDetails.name} (
         {ingredient.quantity === "infinite"
@@ -51,6 +60,7 @@ const SelectedIngredient: React.FC<SelectedIngredientProps> = ({ ingredient, ing
         ref={quantityPickerRef}
         offset={quantityPickerOffset}
         hidden={!isFocused}
+        onBlurInput={onButtonBlur}
       />
     </div>
   ) : null;
