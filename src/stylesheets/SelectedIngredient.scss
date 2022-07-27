@@ -1,8 +1,12 @@
 @use "constants";
 
-.selected-ingredient {
-  padding: 10px 15px;
-  background-color: constants.$ingredient-option-color;
-  border-radius: 50px;
-  margin-right: 5px;
+.selected-ingredient-container {
+  position: relative;
+
+  .selected-ingredient {
+    padding: 10px 15px;
+    background-color: constants.$ingredient-option-color;
+    border-radius: 50px;
+    margin-right: 5px;
+  }
 }

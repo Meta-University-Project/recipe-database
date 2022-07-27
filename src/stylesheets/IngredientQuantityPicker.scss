@@ -1,0 +1,55 @@
+@use "constants";
+
+.ingredient-quantity-picker {
+  position: absolute;
+  background-color: constants.$important-background-color;
+  box-shadow: constants.$drop-shadow;
+  padding: 10px 20px;
+  border-radius: constants.$border-radius;
+  top: calc(100% + 20px * 0.86602540378 - 5px);
+  width: 250px;
+
+  &.hidden {
+    visibility: hidden;
+  }
+
+  label {
+    display: flex;
+    font-weight: constants.$bold-font-weight;
+    align-items: center;
+    margin-right: 10px;
+  }
+
+  input {
+    text-align: center;
+    // Remove number arrow keys in Firefox
+    -moz-appearance: textfield;
+
+    &::placeholder {
+      font-size: 20px;
+    }
+
+    // Remove number arrow keys in Chrome, Safari, Edge, & Opera
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+
+  input, select {
+    width: 100%;
+    margin: 5px 0;
+  }
+
+  .top-arrow {
+    position: absolute;
+    left: calc(250px / 2 - 10px);
+    top: calc(-20px * 0.86602540378 + 2px);
+    height: calc(20px * 0.86602540378);
+    width: 20px;
+    background-color: constants.$important-background-color;
+    clip-path: polygon(0 100%, 50% 0, 100% 100%);
+    box-shadow: constants.$drop-shadow;
+  }
+}
