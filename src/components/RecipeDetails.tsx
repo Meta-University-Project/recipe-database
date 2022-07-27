@@ -40,9 +40,11 @@ const RecipeDetails: React.FC<RecipeDetailsProps> = ({ recipes, ingredientOption
             {recipe.ingredients.map(({ id, quantity, unit }, index) => {
               const ingredientDetails = getIngredientDetails(id, ingredientOptions);
               return (
-                ingredientDetails
+                ingredientDetails && quantity
                   ? <li key={id}>{quantity} {unit} {ingredientDetails.name}</li>
-                  : null
+                  : ingredientDetails
+                    ? <li key={id}>{ingredientDetails.name}, to taste</li>
+                    : null
               );
             })}
           </ul>

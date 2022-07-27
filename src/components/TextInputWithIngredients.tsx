@@ -7,10 +7,10 @@ import "../stylesheets/TextInputWithIngredients.scss";
 
 type TextInputProps = React.HTMLAttributes<HTMLDivElement> & {
   onTextChange: React.Dispatch<React.SetStateAction<string>>,
-  onIngredientsChange: React.Dispatch<React.SetStateAction<Ingredient[]>>,
+  onIngredientsChange: React.Dispatch<React.SetStateAction<SearchedIngredient[]>>,
   placeholder: string,
   value: string,
-  ingredients: Ingredient[],
+  ingredients: SearchedIngredient[],
   ingredientOptions: IngredientOption[],
   innerRef: React.RefObject<HTMLDivElement>,
   incrementFocusedResult: () => void,
@@ -87,7 +87,13 @@ const TextInputWithIngredients: React.FC<TextInputProps> = ({ value, ingredients
 
   const deleteSelectedIngredient = (id: string) => {
     onIngredientsChange(ingredients.filter((ingredient) => ingredient.id !== id));
-  }
+  };
+
+  const setSelectedIngredient = (index: number, newValue: SearchedIngredient) => {
+    const newIngredients = [...ingredients];
+    newIngredients[index] = { ...newIngredients[index], ...newValue };
+    onIngredientsChange(newIngredients);
+  };
 
   React.useEffect(() => {
     setCaret(innerRef.current, caretPos.current);
@@ -113,12 +119,13 @@ const TextInputWithIngredients: React.FC<TextInputProps> = ({ value, ingredients
       <p className={`placeholder ${!showPlaceholder ? "hidden" : ""}`} style={{ left: placeholderOffset }}>
         {placeholder}
       </p>
-      {ingredients.map((ingredient) => (
+      {ingredients.map((ingredient, index) => (
         <SelectedIngredient
           key={ingredient.id}
           ingredient={ingredient}
           ingredientOptions={ingredientOptions}
           onDelete={() => deleteSelectedIngredient(ingredient.id)}
+          onChange={(newValue: SearchedIngredient) => setSelectedIngredient(index, newValue)}
         />
       ))}
       <div
