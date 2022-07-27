@@ -6,12 +6,13 @@ import { getBounds, getIngredientDetails } from "../constants/utils";
 import "../stylesheets/SelectedIngredient.scss";
 
 type SelectedIngredientProps = {
-  ingredient: Ingredient,
+  ingredient: SearchedIngredient,
   ingredientOptions: IngredientOption[],
-  onDelete: () => void
+  onDelete: () => void,
+  onChange: (newValue: SearchedIngredient) => void
 };
 
-const SelectedIngredient: React.FC<SelectedIngredientProps> = ({ ingredient, ingredientOptions, onDelete }) => {
+const SelectedIngredient: React.FC<SelectedIngredientProps> = ({ ingredient, ingredientOptions, onDelete, onChange }) => {
   const [quantityPickerOffset, setQuantityPickerOffset] = React.useState(0);
   const [isFocused, setIsFocused] = React.useState(false);
 
@@ -50,17 +51,19 @@ const SelectedIngredient: React.FC<SelectedIngredientProps> = ({ ingredient, ing
         onBlur={onButtonBlur}
       >
         {ingredientDetails.name} (
-        {ingredient.quantity === "infinite"
-          ? <FontAwesomeIcon icon={solid("infinity")} />
-          : `${ingredient.quantity} ${ingredient.unit}`}
-        )
+        {ingredient.quantity
+          ? `${ingredient.quantity} ${ingredient.unit}`
+          : <FontAwesomeIcon icon={solid("infinity")} />
+        })
       </button>
       <IngredientQuantityPicker
+        ingredient={ingredient}
         ingredientDetails={ingredientDetails}
         ref={quantityPickerRef}
         offset={quantityPickerOffset}
         hidden={!isFocused}
         onBlurInput={onButtonBlur}
+        onChange={onChange}
       />
     </div>
   ) : null;

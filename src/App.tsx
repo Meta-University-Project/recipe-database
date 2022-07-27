@@ -9,7 +9,7 @@ import "./stylesheets/App.scss";
 
 const App = () => {
   const [searchValue, setSearchValue] = React.useState("");
-  const [queriedIngredients, setQueriedIngredients] = React.useState<Ingredient[]>([]);
+  const [queriedIngredients, setQueriedIngredients] = React.useState<SearchedIngredient[]>([]);
 
   const recipeMatches: SearchedRecipe[] = Recipes.map(({ ingredients, ...recipe }) => {
     let totalMatching = 0;

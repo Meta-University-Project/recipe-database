@@ -3,7 +3,7 @@ type Recipe = {
   title: string,
   id: string,
   description: string,
-  ingredients: Ingredient[],
+  ingredients: RecipeIngredient[],
   instructions: string[]
 };
 
@@ -13,13 +13,19 @@ type SearchedRecipe = Recipe & {
 
 type Ingredient = {
   id: string,
-  // "infinite" used only in searches, "to taste" excludes ingredient from search but will appear in recipe
-  quantity: number | "infinite" | "to taste",
-  // "any" form used in searches
-  form: FoodForm | "any",
-  // "any" unit used when quantity === "infinite"
-  unit: Unit | "any",
+  quantity: number,
+  form: FoodForm,
+  unit: Unit,
 };
+
+// Note: excluding quantity assumes ingredient is "to taste" -- i.e. ingredient will be excluded from search
+// (but still present in recipe)
+type RecipeIngredient = Ingredient | (Omit<Ingredient, "quantity"> & {
+  quantity: undefined
+});
+
+// Note: omitting quantity & unit will query for any amount of ingredient
+type SearchedIngredient = Omit<Ingredient, "form"> | Omit<Ingredient, "form", "quantity", "unit">;
 
 type IngredientOption = {
   id: string,

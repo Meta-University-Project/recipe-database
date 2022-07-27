@@ -7,8 +7,8 @@ import "../stylesheets/SearchBar.scss";
 type SearchBarProps = {
   searchValue: string,
   setSearchValue: React.Dispatch<React.SetStateAction<string>>,
-  queriedIngredients: Ingredient[],
-  setQueriedIngredients: React.Dispatch<React.SetStateAction<Ingredient[]>>,
+  queriedIngredients: SearchedIngredient[],
+  setQueriedIngredients: React.Dispatch<React.SetStateAction<SearchedIngredient[]>>,
   ingredientOptions: IngredientOption[]
 };
 
@@ -24,7 +24,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchValue, setSearchValue, quer
   const addIngredient = (id: string) => {
     setQueriedIngredients((ingredients) => ([
       ...ingredients,
-      { id, quantity: "infinite", form: "any", unit: "any" }
+      { id }
     ]));
     setSearchValue("");
   };
