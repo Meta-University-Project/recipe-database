@@ -101,7 +101,7 @@ const TextInputWithIngredients: React.FC<TextInputProps> = ({ value, ingredients
   return (
     <div
       ref={containerRef}
-      className={`text-input-with-ingredients ${className || ""}`}
+      className={`input text-input-with-ingredients ${className || ""}`}
       placeholder={placeholder}
       onInput={onInputChange}
       onClick={() => innerRef.current?.focus()}
