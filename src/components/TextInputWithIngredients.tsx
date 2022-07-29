@@ -101,43 +101,46 @@ const TextInputWithIngredients: React.FC<TextInputProps> = ({ value, ingredients
   }, [innerRef, caretPos, value]);
 
   React.useEffect(() => {
-    setPlaceholderOffset(getBounds(innerRef).x - getBounds(containerRef).x - 2)
+    setPlaceholderOffset(getBounds(innerRef).x - getBounds(containerRef).x + 2)
   }, [innerRef, containerRef]);
 
   return (
     <div
-      ref={containerRef}
       className={`input text-input-with-ingredients ${className || ""}`}
-      placeholder={placeholder}
-      onInput={onInputChange}
       onClick={() => innerRef.current?.focus()}
       {...props}
     >
       <div className={"search-icon"}>
         <FontAwesomeIcon icon={solid("magnifying-glass")} fontSize={25} />
       </div>
-      <p className={`placeholder ${!showPlaceholder ? "hidden" : ""}`} style={{ left: placeholderOffset }}>
-        {placeholder}
-      </p>
-      {ingredients.map((ingredient, index) => (
-        <SelectedIngredient
-          key={ingredient.id}
-          ingredient={ingredient}
-          ingredientOptions={ingredientOptions}
-          onDelete={() => deleteSelectedIngredient(ingredient.id)}
-          onChange={(newValue: SearchedIngredient) => setSelectedIngredient(index, newValue)}
-        />
-      ))}
       <div
-        contentEditable
-        suppressContentEditableWarning
-        className={"text-div"}
-        ref={innerRef}
-        onKeyDown={onKeyPress}
-        onFocus={() => setSearchFocused(true)}
-        onBlur={onLeaveFocus}
+        className={"search-content"}
+        ref={containerRef}
+        onInput={onInputChange}
       >
-        {value}
+        <p className={`placeholder ${!showPlaceholder ? "hidden" : ""}`} style={{ left: placeholderOffset }}>
+          {placeholder}
+        </p>
+        {ingredients.map((ingredient, index) => (
+          <SelectedIngredient
+            key={ingredient.id}
+            ingredient={ingredient}
+            ingredientOptions={ingredientOptions}
+            onDelete={() => deleteSelectedIngredient(ingredient.id)}
+            onChange={(newValue: SearchedIngredient) => setSelectedIngredient(index, newValue)}
+          />
+        ))}
+        <div
+          contentEditable
+          suppressContentEditableWarning
+          className={"text-div"}
+          ref={innerRef}
+          onKeyDown={onKeyPress}
+          onFocus={() => setSearchFocused(true)}
+          onBlur={onLeaveFocus}
+        >
+          {value}
+        </div>
       </div>
     </div>
   );

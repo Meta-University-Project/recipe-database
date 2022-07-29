@@ -6,7 +6,7 @@
   resize: none;
   display: flex;
   align-items: center;
-  min-height: 66px;
+  min-height: 72px;
   cursor: text;
   position: relative;
 
@@ -14,27 +14,35 @@
     margin-right: 10px;
   }
 
-  .placeholder {
-    font-weight: constants.$bold-font-weight;
-    color: constants.$placeholder-color;
-    position: absolute;
-    pointer-events: none;
-    z-index: 0;
+  .search-content {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    width: 100%;
 
-    &.hidden {
-      visibility: hidden;
+    .placeholder {
+      font-weight: constants.$bold-font-weight;
+      color: constants.$placeholder-color;
+      position: absolute;
+      pointer-events: none;
+      z-index: 0;
+      top: -5px;
+
+      &.hidden {
+        visibility: hidden;
+      }
     }
-  }
 
-  .text-div {
-    margin: 10px 5px;
-    min-width: 10px;
-    min-height: 22px;
-    outline: none;
-    z-index: 1;
-
-    &:focus {
+    .text-div {
+      margin: 10px 5px;
+      min-width: 10px;
+      min-height: 22px;
       outline: none;
+      z-index: 1;
+
+      &:focus {
+        outline: none;
+      }
     }
   }
 }
