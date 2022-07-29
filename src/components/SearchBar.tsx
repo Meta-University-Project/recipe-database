@@ -58,13 +58,24 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchValue, setSearchValue, quer
 
   // Filter available ingredients based on what user is searching
   React.useEffect(() => {
-    setFilteredIngredientOptions(
-      searchValue.length > 0
-        ? ingredientOptions.filter(({ id, name }) => (
-          name.toLowerCase().includes(searchValue.toLowerCase())
-          && !queriedIngredients.find((queriedIngredient) => queriedIngredient.id === id)
-        )) : []
-    );
+    if (searchValue.length === 0) {
+      setFilteredIngredientOptions([]);
+    } else {
+      const newFilteredOptions = [];
+      let i = 0;
+      // only show top 10 matching ingredients
+      while (i < ingredientOptions.length && newFilteredOptions.length < 10) {
+        const option = ingredientOptions[i];
+        if (
+          option.name.toLowerCase().includes(searchValue.toLowerCase().trim())
+          && !queriedIngredients.find((queriedIngredient) => queriedIngredient.id === option.id)
+        ) {
+            newFilteredOptions.push(option);
+        }
+        i++;
+      }
+      setFilteredIngredientOptions(newFilteredOptions);
+    }
   }, [queriedIngredients, ingredientOptions, searchValue]);
 
   return (
