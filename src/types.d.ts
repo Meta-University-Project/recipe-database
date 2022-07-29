@@ -29,8 +29,7 @@ type SearchedIngredient = Omit<Ingredient, "form"> | Omit<Ingredient, "form", "q
 
 type IngredientOption = {
   id: string,
-  name: string,
-  forms: FoodForm[] // array of possible forms this ingredient can take
+  name: string
 }
 
 // TODO: add form support (make form an enum, not string)

@@ -10,7 +10,7 @@ type IngredientSearchResultProps = {
 };
 
 const IngredientSearchResult: React.FC<IngredientSearchResultProps> = ({ searchValue, onClick, name, focused, focusResult }) => {
-  const queryIndex = name.toLowerCase().indexOf(searchValue.toLowerCase());
+  const queryIndex = name.toLowerCase().indexOf(searchValue.toLowerCase().trim());
 
   // Technically unreachable, but check that substring exists within name
   if (queryIndex === -1)
