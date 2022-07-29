@@ -5,6 +5,7 @@ import RecipeGrid from "./components/RecipeGrid";
 import RecipeDetails from "./components/RecipeDetails";
 import IngredientOptions from "./constants/ingredientOptions";
 import Recipes from "./constants/recipes";
+import convert from "convert-units";
 import "./stylesheets/App.scss";
 
 const App = () => {
