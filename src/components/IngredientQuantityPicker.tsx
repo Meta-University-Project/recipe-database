@@ -1,4 +1,6 @@
 import React from "react";
+import { MassUnit, VolumeUnit, LengthUnit } from "../constants/units";
+import convert from "convert-units";
 import "../stylesheets/IngredientQuantityPicker.scss";
 
 type IngredientQuantityPickerProps = {
@@ -11,7 +13,7 @@ type IngredientQuantityPickerProps = {
 }
 
 const IngredientQuantityPicker = React.forwardRef<HTMLTableElement, IngredientQuantityPickerProps>(({ ingredient, ingredientDetails, offset, hidden, onBlurInput, onChange }, ref) => {
-  const [unit, setLocalUnit] = React.useState(ingredientDetails.units[0]);
+  const [unit, setLocalUnit] = React.useState(MassUnit.mg);
 
   const inputValue = !ingredient.quantity ? "" : ingredient.quantity.toString();
 
@@ -28,7 +30,7 @@ const IngredientQuantityPicker = React.forwardRef<HTMLTableElement, IngredientQu
 
   const setUnit: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
     onChange({ unit: e.target.value });
-  }
+  };
 
   React.useEffect(() => {
     if (ingredient.unit) {
@@ -66,7 +68,19 @@ const IngredientQuantityPicker = React.forwardRef<HTMLTableElement, IngredientQu
         </td>
         <td>
           <select value={unit} onChange={setUnit} className={"input unit-select"} onBlur={onBlurInput}>
-            {ingredientDetails.units.map((unit) => <option key={unit} value={unit}>{unit}</option>)}
+            <option disabled>weight</option>
+            {Object.values(MassUnit).map((unit) => (
+              <option key={unit} value={unit}>&ensp;{convert().describe(unit).plural.toLowerCase()}</option>
+            ))}
+            <option disabled>volume</option>
+            {Object.values(VolumeUnit).map((unit) => (
+              <option key={unit} value={unit}>&ensp;{convert().describe(unit).plural.toLowerCase()}</option>
+            ))}
+            <option disabled>length</option>
+            {Object.values(LengthUnit).map((unit) => (
+              <option key={unit} value={unit}>&ensp;{convert().describe(unit).plural.toLowerCase()}</option>
+            ))}
+            {/*{ingredientDetails.units.map((unit) => <option key={unit} value={unit}>{unit}</option>)}*/}
           </select>
         </td>
       </tr>
