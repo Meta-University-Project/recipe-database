@@ -4,17 +4,23 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Card from "./Card";
 import "../stylesheets/RecipeDetails.scss";
-import { getIngredientDetails } from "../constants/utils";
+import { getRecipe } from "../constants/firebase";
+import { pluralUnit, singleUnit } from "../constants/units";
+import Fraction from "fraction.js";
 
-type RecipeDetailsProps = {
-  recipes: Recipe[],
-  ingredientOptions: IngredientOption[]
-};
+type RecipeDetailsProps = {};
 
-const RecipeDetails: React.FC<RecipeDetailsProps> = ({ recipes, ingredientOptions }) => {
+const RecipeDetails: React.FC<RecipeDetailsProps> = () => {
   const navigate = useNavigate();
   const { recipeId } = useParams();
-  const recipe = recipes.find(({ id }) => recipeId === id);
+  const [recipe, setRecipe] = React.useState<Recipe | null>(null);
+
+  React.useEffect(() => {
+    if (!recipeId)
+      return;
+    getRecipe(recipeId).then(setRecipe)
+      .catch(() => setRecipe(null));
+  }, [recipeId]);
 
   if (!recipe) {
     // TODO: Handle invalid/undefined recipe ID (404 page)
@@ -37,16 +43,13 @@ const RecipeDetails: React.FC<RecipeDetailsProps> = ({ recipes, ingredientOption
       <div className={"recipe-contents"}>
         <Card header={"Ingredients"} className={"ingredients"} headerColor={"purple"}>
           <ul>
-            {recipe.ingredients.map(({ id, quantity, unit }, index) => {
-              const ingredientDetails = getIngredientDetails(id, ingredientOptions);
-              return (
-                ingredientDetails && quantity
-                  ? <li key={id}>{quantity} {unit} {ingredientDetails.name}</li>
-                  : ingredientDetails
-                    ? <li key={id}>{ingredientDetails.name}, to taste</li>
-                    : null
-              );
-            })}
+            {recipe.ingredients.map(({ name, quantity, unit }, index) => (
+              <li key={index}>
+                {(new Fraction(quantity)).toFraction(true)}&nbsp;
+                {quantity > 1 ? pluralUnit(unit) : singleUnit(unit)}&nbsp;
+                {name}
+              </li>
+            ))}
           </ul>
         </Card>
         <Card header={"Preparation"} className={"instructions"} headerColor={"green"}>

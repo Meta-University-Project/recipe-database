@@ -2,30 +2,23 @@ type Recipe = {
   img: string,
   title: string,
   id: string,
-  description: string,
-  ingredients: RecipeIngredient[],
+  ingredients: Ingredient[],
   instructions: string[]
 };
 
-type SearchedRecipe = Recipe & {
-  match: number
-};
+type SearchedRecipe = Recipe;
 
 type Ingredient = {
-  id: string,
+  name: string,
   quantity: number,
   form: FoodForm,
   unit: Unit,
 };
 
-// Note: excluding quantity assumes ingredient is "to taste" -- i.e. ingredient will be excluded from search
-// (but still present in recipe)
-type RecipeIngredient = Ingredient | (Omit<Ingredient, "quantity"> & {
-  quantity: undefined
-});
-
 // Note: omitting quantity & unit will query for any amount of ingredient
-type SearchedIngredient = Omit<Ingredient, "form"> | Omit<Ingredient, "form", "quantity", "unit">;
+type SearchedIngredient = (Omit<Ingredient, "form"> | Omit<Ingredient, "form", "quantity", "unit">) & {
+  id: string
+};
 
 type IngredientOption = {
   id: string,
@@ -34,3 +27,20 @@ type IngredientOption = {
 
 // TODO: add form support (make form an enum, not string)
 type FoodForm = string;
+
+//////////////////////////
+// Firestore Data Types //
+//////////////////////////
+
+type FirestoreRecipe = {
+  forms: string[],
+  id: string,
+  ingredients: string[],
+  instructions: string[],
+  quantities: number[],
+  searchIngredients: string[],
+  title: string,
+  units: string[],
+  url: string,
+  img: string
+};
