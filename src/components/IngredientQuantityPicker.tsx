@@ -1,5 +1,6 @@
 import React from "react";
-import { MassUnit, VolumeUnit, LengthUnit } from "../constants/units";
+import { MassUnit, VolumeUnit } from "../constants/units";
+import { pluralUnit } from "../constants/units";
 import convert from "convert-units";
 import "../stylesheets/IngredientQuantityPicker.scss";
 
@@ -70,17 +71,12 @@ const IngredientQuantityPicker = React.forwardRef<HTMLTableElement, IngredientQu
           <select value={unit} onChange={setUnit} className={"input unit-select"} onBlur={onBlurInput}>
             <option disabled>weight</option>
             {Object.values(MassUnit).map((unit) => (
-              <option key={unit} value={unit}>&ensp;{convert().describe(unit).plural.toLowerCase()}</option>
+              <option key={unit} value={unit}>&ensp;{pluralUnit(unit)}</option>
             ))}
             <option disabled>volume</option>
             {Object.values(VolumeUnit).map((unit) => (
-              <option key={unit} value={unit}>&ensp;{convert().describe(unit).plural.toLowerCase()}</option>
+              <option key={unit} value={unit}>&ensp;{pluralUnit(unit)}</option>
             ))}
-            <option disabled>length</option>
-            {Object.values(LengthUnit).map((unit) => (
-              <option key={unit} value={unit}>&ensp;{convert().describe(unit).plural.toLowerCase()}</option>
-            ))}
-            {/*{ingredientDetails.units.map((unit) => <option key={unit} value={unit}>{unit}</option>)}*/}
           </select>
         </td>
       </tr>
