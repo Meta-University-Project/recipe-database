@@ -3,7 +3,8 @@ type Recipe = {
   title: string,
   id: string,
   ingredients: Ingredient[],
-  instructions: string[]
+  instructions: string[],
+  nutr_values_per100g: NutritionalValue
 };
 
 type SearchedRecipe = Omit<Recipe, "ingredients", "instructions">;
@@ -28,6 +29,15 @@ type IngredientOption = {
 // TODO: add form support (make form an enum, not string)
 type FoodForm = string;
 
+type NutritionalValue = {
+  energy: number,
+  fat: number,
+  protein: number,
+  salt: number,
+  saturates: number,
+  sugars: number
+}
+
 ////////////////////
 // API Data Types //
 ////////////////////
@@ -42,7 +52,8 @@ type FirestoreRecipe = {
   title: string,
   units: string[],
   url: string,
-  img: string
+  img: string,
+  nutr_values_per100g: NutritionalValue
 };
 
 type SearchResponse = {

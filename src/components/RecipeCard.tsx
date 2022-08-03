@@ -7,7 +7,9 @@ type RecipeCardProps = SearchedRecipe;
 const RecipeCard: React.FC<RecipeCardProps> = ({ img, title, id }) => (
   <Link to={`/recipes/${id}`} className={"recipe-card-link-wrapper"}>
     <div className={"recipe-card"}>
-      <img src={img} alt={title} />
+      <div className={"image-wrapper"}>
+        <img src={img} alt={title} />
+      </div>
       <h2>{title}</h2>
     </div>
   </Link>

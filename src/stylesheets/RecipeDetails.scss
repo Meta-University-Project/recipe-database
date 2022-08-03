@@ -5,7 +5,7 @@
   position: relative;
 
   @media screen and (min-width: 1200px) {
-    padding: 60px calc((100vw - 1200px) / 2 + 60px);
+    padding: 60px calc((100vw - 1500px) / 2 + 60px);
   }
 
   header {
@@ -35,10 +35,6 @@
         font-size: constants.$huge-font-size;
         margin: 0 0 30px 0;
       }
-
-      .recipe-description {
-
-      }
     }
 
     img {
@@ -51,6 +47,7 @@
   .recipe-contents {
     display: flex;
     padding: 0 60px;
+    align-items: flex-start;
 
     .card {
       margin: 40px 0;

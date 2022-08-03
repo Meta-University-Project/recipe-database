@@ -32,6 +32,17 @@
     }
   }
 
+  &.blue {
+    &:hover {
+      outline: solid 2px constants.$card-blue-shadow-color;
+    }
+
+    .card-header {
+      background-color: constants.$card-blue-color;
+      box-shadow: 4px 0 0 constants.$card-blue-shadow-color inset;
+    }
+  }
+
   .card-header {
     padding: 25px;
     border-radius: constants.$border-radius constants.$border-radius 0 0;
