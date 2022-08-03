@@ -55,9 +55,9 @@ export const getIngredients = async () => {
   return options;
 };
 
-export const search = async (ingredients: SearchedIngredient[], ingredientOptions: IngredientOption[], setNextPage: React.Dispatch<React.SetStateAction<number | null>>): Promise<Recipe[]> => {
+export const search = async (ingredients: SearchedIngredient[], textQuery: string, ingredientOptions: IngredientOption[], setNextPage: React.Dispatch<React.SetStateAction<number | null>>): Promise<Recipe[]> => {
   const { data } = await axios.post(SearchEndpoint, {
-    text: "",
+    text: textQuery,
     ingredients: ingredients.map(({ id }) => getIngredientDetails(id, ingredientOptions)?.name)
       .filter((ingredient) => !!ingredient)
   }) as AxiosResponse<SearchResponse>;
@@ -71,9 +71,11 @@ export const search = async (ingredients: SearchedIngredient[], ingredientOption
     let queryData = results.splice(0, 10).map(({ id }) => id);
     const q = query(recipesRef, where("id", "in", queryData));
     const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      recipes.push(firestoreRecipeToRecipe(doc.data() as FirestoreRecipe));
-    });
+    for (const doc of querySnapshot.docs) {
+      const data: FirestoreRecipe = doc.data() as FirestoreRecipe;
+      const recipe = firestoreRecipeToRecipe(data);
+      recipes.push(recipe);
+    }
   }
   return recipes;
 }

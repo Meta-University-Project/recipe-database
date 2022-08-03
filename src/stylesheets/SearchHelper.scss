@@ -10,6 +10,7 @@
   left: 75px;
   box-shadow: 0 0 5px 2px #00000033;
   clip-path: inset(0 -5px -5px -5px);
+  z-index: 10000;
 
   &.empty {
     visibility: hidden;

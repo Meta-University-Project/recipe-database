@@ -17,13 +17,13 @@ const RecipeDetails: React.FC<RecipeDetailsProps> = () => {
   const [recipe, setRecipe] = React.useState<Recipe | null>(null);
 
   React.useEffect(() => {
-    if (!recipeId)
+    if (!recipeId) {
+      navigate("/");
       return;
+    }
     getRecipe(recipeId).then(setRecipe)
       .catch(() => setRecipe(null));
-  }, [recipeId]);
-
-  console.log(recipe);
+  }, [recipeId, navigate]);
 
   if (!recipe) {
     // TODO: Handle invalid/undefined recipe ID (404 page)

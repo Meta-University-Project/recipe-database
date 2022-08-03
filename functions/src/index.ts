@@ -19,13 +19,10 @@ const client = new Client({
 const cleanResults = ({ results }: SearchResponse, queriedIngredients: string[]) => (
   // Note: ts-ignore is required here because Elastic types are just wrong >:(
   // @ts-ignore
-  results.map(({ instructions, ingredients, id, title, _meta }) => ({
-    instructions: instructions.raw,
-    ingredients: ingredients.raw,
+  results.map(({ id, _meta }) => ({
     id: id.raw,
-    title: title.raw,
     match: _meta.score / 10
-  })).sort((recipeA, recipeB) => recipeB.match - recipeA.match)
+  }))
 );
 
 export const searchRecipes = functions.https.onRequest(async (request, response) => {
@@ -37,7 +34,7 @@ export const searchRecipes = functions.https.onRequest(async (request, response)
       const appSearchResponse = await client.app.search({
         engine_name: ENGINE_NAME,
         body: {
-          query: textSearch,
+          query: `${textSearch} AND (${ingredients.join(" OR ")}`,
           filters: {
             any: {
               searchingredients: ingredients
@@ -53,10 +50,7 @@ export const searchRecipes = functions.https.onRequest(async (request, response)
             title: {}
           },
           result_fields: {
-            id: { raw: {} },
-            instructions: { raw: {} },
-            ingredients: { raw: {} },
-            title: { raw: {} }
+            id: { raw: {} }
           }
         }
       });
