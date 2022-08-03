@@ -4,7 +4,7 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Card from "./Card";
 import "../stylesheets/RecipeDetails.scss";
-import { getRecipe } from "../constants/firebase";
+import { getRecipe } from "../constants/api";
 import { pluralUnit, singleUnit } from "../constants/units";
 import Fraction from "fraction.js";
 
