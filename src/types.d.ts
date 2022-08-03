@@ -6,7 +6,7 @@ type Recipe = {
   instructions: string[]
 };
 
-type SearchedRecipe = Recipe;
+type SearchedRecipe = Omit<Recipe, "ingredients", "instructions">;
 
 type Ingredient = {
   name: string,
@@ -28,9 +28,9 @@ type IngredientOption = {
 // TODO: add form support (make form an enum, not string)
 type FoodForm = string;
 
-//////////////////////////
-// Firestore Data Types //
-//////////////////////////
+////////////////////
+// API Data Types //
+////////////////////
 
 type FirestoreRecipe = {
   forms: string[],
@@ -43,4 +43,20 @@ type FirestoreRecipe = {
   units: string[],
   url: string,
   img: string
+};
+
+type SearchResponse = {
+  page: {
+    current: number,
+    total_pages: number,
+    total_results: number,
+    size: number
+  },
+  results: {
+    id: string,
+    ingredients: string[],
+    instructions: string[],
+    match: number,
+    title: string
+  }[]
 };
