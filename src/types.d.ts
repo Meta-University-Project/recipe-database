@@ -65,9 +65,6 @@ type SearchResponse = {
   },
   results: {
     id: string,
-    ingredients: string[],
-    instructions: string[],
-    match: number,
-    title: string
+    match: number
   }[]
 };

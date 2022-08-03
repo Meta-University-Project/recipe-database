@@ -6,6 +6,9 @@ nav {
   align-items: center;
   padding: 50px 30px;
   background-color: constants.$important-background-color;
+  position: sticky;
+  top: 0;
+  z-index: 10000;
 
   .logo {
     height: 65px;
