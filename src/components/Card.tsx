@@ -4,7 +4,7 @@ import "../stylesheets/Card.scss";
 type CardProps = React.HTMLProps<HTMLDivElement> & {
   header: string,
   bottomHeader?: boolean,
-  headerColor: "purple" | "green"
+  headerColor: "purple" | "green" | "blue"
 };
 
 const Card: React.FC<CardProps> = ({ header, bottomHeader = false, headerColor, className, children, ...props }) => (

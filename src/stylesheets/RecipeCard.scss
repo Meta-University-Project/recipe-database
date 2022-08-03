@@ -3,6 +3,7 @@
 .recipe-card-link-wrapper {
   text-decoration: none;
   color: inherit;
+  padding: 10px;
 }
 
 .recipe-card {
@@ -10,23 +11,30 @@
   background-color: constants.$important-background-color;
   padding: 25px;
   border-radius: constants.$border-radius;
-  margin: 10px;
   text-align: left;
   cursor: pointer;
   transition: background-color constants.$transition;
+  height: 100%;
 
   &:hover {
     background-color: constants.$accent-color;
   }
 
-  img {
+  .image-wrapper {
     width: 100%;
-    aspect-ratio: 1;
-    object-fit: cover;
+    height: 350px;
     border: constants.$border-style;
+    padding: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 
-  p {
+
+  h2 {
     margin-bottom: 0;
   }
 }

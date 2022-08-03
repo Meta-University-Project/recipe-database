@@ -7,6 +7,7 @@ import "../stylesheets/RecipeDetails.scss";
 import { getRecipe } from "../constants/api";
 import { pluralUnit, singleUnit } from "../constants/units";
 import Fraction from "fraction.js";
+import NutritionalTable from "./NutritionalTable";
 
 type RecipeDetailsProps = {};
 
@@ -22,6 +23,8 @@ const RecipeDetails: React.FC<RecipeDetailsProps> = () => {
       .catch(() => setRecipe(null));
   }, [recipeId]);
 
+  console.log(recipe);
+
   if (!recipe) {
     // TODO: Handle invalid/undefined recipe ID (404 page)
     return null;
@@ -34,7 +37,7 @@ const RecipeDetails: React.FC<RecipeDetailsProps> = () => {
             <FontAwesomeIcon icon={solid("chevron-left")} fontSize={25} />
           </button>
           <h1>{recipe.title}</h1>
-          <p className={"recipe-description"}>Nutrition info, cook time, etc here</p>
+          <NutritionalTable nutr_values_per100g={recipe.nutr_values_per100g} />
         </div>
         <div className={"column"}>
           <img src={recipe.img} alt={recipe.title} />
@@ -43,11 +46,11 @@ const RecipeDetails: React.FC<RecipeDetailsProps> = () => {
       <div className={"recipe-contents"}>
         <Card header={"Ingredients"} className={"ingredients"} headerColor={"purple"}>
           <ul>
-            {recipe.ingredients.map(({ name, quantity, unit }, index) => (
+            {recipe.ingredients.map(({ name, quantity, unit, form }, index) => (
               <li key={index}>
                 {(new Fraction(quantity)).toFraction(true)}&nbsp;
                 {quantity > 1 ? pluralUnit(unit) : singleUnit(unit)}&nbsp;
-                {name}
+                {name}{form.length > 0 ? ", " + form : ""}
               </li>
             ))}
           </ul>

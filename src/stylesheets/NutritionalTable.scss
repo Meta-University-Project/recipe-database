@@ -1,0 +1,20 @@
+@use "constants";
+
+.nutritional-table-wrapper {
+
+  .nutritional-table {
+    text-align: left;
+
+    thead {
+      font-size: constants.$large-font-size;
+    }
+
+    .saturates th {
+      padding-left: 30px;
+    }
+
+    th, td {
+      padding: 3px 15px 3px 0;
+    }
+  }
+}
