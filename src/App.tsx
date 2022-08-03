@@ -15,9 +15,15 @@ const App = () => {
   const [ingredientOptions, setIngredientOptions] = React.useState<IngredientOption[]>([]);
   const [nextPage, setNextPage] = React.useState<number | null>(1); // null -> no valid next page
   const [recipeMatches, setRecipeMatches] = React.useState<SearchedRecipe[]>([]);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const lastIngredientsLength = React.useRef<number>(0);
   const lastSearchValue = React.useRef<string>("");
+
+  const loadMoreResults = () => {
+    return search(queriedIngredients, searchValue, ingredientOptions, setNextPage, nextPage)
+      .then((results) => setRecipeMatches([...recipeMatches, ...results]))
+  }
 
   // fetch all ingredients from Firebase
   React.useEffect(() => {
@@ -26,19 +32,22 @@ const App = () => {
 
   // execute a search query, navigate back to homepage if necessary
   React.useEffect(() => {
+    const executeSearch = () => {
+      setIsLoading(true);
+      search(queriedIngredients, searchValue, ingredientOptions, setNextPage, 1)
+        .then((results) => setRecipeMatches(results))
+        .finally(() => setIsLoading(false));
+    }
+
     if (lastIngredientsLength.current !== queriedIngredients.length) {
       // execute search query immediately if ingredients are changed
-      search(queriedIngredients, searchValue, ingredientOptions, setNextPage)
-        .then((results) => setRecipeMatches(results));
+      executeSearch();
       if (location.pathname !== "/") {
         navigate("/");
       }
     } else if (lastSearchValue.current !== searchValue) {
       // only search with value if it is the same for 1.5 seconds
-      const timer = setTimeout(() => {
-        search(queriedIngredients, searchValue, ingredientOptions, setNextPage)
-          .then((results) => setRecipeMatches(results));
-      }, 1500);
+      const timer = setTimeout(executeSearch, 1500);
       return () => clearTimeout(timer);
     }
     lastIngredientsLength.current = queriedIngredients.length;
@@ -55,7 +64,9 @@ const App = () => {
         ingredientOptions={ingredientOptions}
       />
       <Routes>
-        <Route path={"/"} element={<RecipeGrid recipes={recipeMatches} />} />
+        <Route path={"/"} element={
+          <RecipeGrid recipes={recipeMatches} isLoading={isLoading} loadMoreResults={loadMoreResults} hasNextPage={!!nextPage} />
+        } />
         <Route path={"recipes"}>
           <Route path={":recipeId"} element={<RecipeDetails />} />
         </Route>

@@ -55,13 +55,14 @@ export const getIngredients = async () => {
   return options;
 };
 
-export const search = async (ingredients: SearchedIngredient[], textQuery: string, ingredientOptions: IngredientOption[], setNextPage: React.Dispatch<React.SetStateAction<number | null>>): Promise<Recipe[]> => {
-  if (ingredients.length === 0 && textQuery.length === 0) {
+export const search = async (ingredients: SearchedIngredient[], textQuery: string, ingredientOptions: IngredientOption[], setNextPage: React.Dispatch<React.SetStateAction<number | null>>, page: number | null): Promise<Recipe[]> => {
+  if ((ingredients.length === 0 && textQuery.length === 0) || page === null) {
     setNextPage(null);
     return [];
   }
   const { data } = await axios.post(SearchEndpoint, {
     text: textQuery,
+    page,
     ingredients: ingredients.map(({ id }) => getIngredientDetails(id, ingredientOptions)?.name)
       .filter((ingredient) => !!ingredient)
   }) as AxiosResponse<SearchResponse>;

@@ -49,6 +49,9 @@ const TextInputWithIngredients: React.FC<TextInputProps> = ({ value, ingredients
     } else if (e.code === "ArrowUp") {
       e.preventDefault();
       decrementFocusedResult();
+    } else if (e.code === "Escape") {
+      e.preventDefault();
+      innerRef.current?.blur();
     }
   }
 
