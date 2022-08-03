@@ -41,7 +41,9 @@ const App = () => {
       }, 1500);
       return () => clearTimeout(timer);
     }
-  }, [location.pathname, navigate, queriedIngredients, searchValue]);
+    lastIngredientsLength.current = queriedIngredients.length;
+    lastSearchValue.current = searchValue;
+  }, [location.pathname, navigate, queriedIngredients, searchValue, ingredientOptions]);
 
   return (
     <div className={"App"}>

@@ -56,6 +56,10 @@ export const getIngredients = async () => {
 };
 
 export const search = async (ingredients: SearchedIngredient[], textQuery: string, ingredientOptions: IngredientOption[], setNextPage: React.Dispatch<React.SetStateAction<number | null>>): Promise<Recipe[]> => {
+  if (ingredients.length === 0 && textQuery.length === 0) {
+    setNextPage(null);
+    return [];
+  }
   const { data } = await axios.post(SearchEndpoint, {
     text: textQuery,
     ingredients: ingredients.map(({ id }) => getIngredientDetails(id, ingredientOptions)?.name)
